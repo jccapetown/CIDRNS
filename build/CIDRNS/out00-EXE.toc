@@ -1,0 +1,9 @@
+('/opt/infosec/scripts/general/CIDRNS/build/CIDRNS/CIDRNS',
+ True,
+ False,
+ None,
+ None,
+ [],
+ None,
+ False,
+ 1433308877)

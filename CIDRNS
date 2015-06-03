@@ -1,0 +1,39 @@
+#!/usr/bin/python
+#Author: Jacques Coetzee 2015
+#Description
+#Use this simple tool to do a nslookup on a whole cidr range.
+
+import sys
+
+if len(sys.argv) == 1:
+	print '''
+NSLookup_CIDR
+Author: Jacques Coetzee
+Version 1.0
+Description: Do a NS Lookup across a whole CIDR Range or IPS
+
+Usage : Arguments >> NSLookup_CIDR  <IP/CIDR>
+				eg: >NSLookup_CIDR 192.168.1.0/24
+				eg: >NSLookup_CIDR 192.168.1.58
+'''
+	sys.exit()						
+
+print '''
+NSLookup_CIDR
+Author: Jacques Coetzee
+Version 1.0
+
+'''
+
+from netaddr import *
+import os
+
+iprange = sys.argv[1]
+ip = IPNetwork(iprange)
+ip_list = list(ip)
+print "Checking ip(s):", iprange
+print "Found %s ips" % len(ip_list)
+for item in ip_list:
+	command ="nslookup %s | awk -F = '{ print  }'|sed 's/^[ t]*//'| sed '/^$/d'| sed 's/.$//' | grep name |  awk '{print \"%s\", \"\t\",  $4}'" % (item, item) 
+	os.system(command)
+
